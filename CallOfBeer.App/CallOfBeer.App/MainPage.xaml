@@ -5,10 +5,101 @@
     xmlns:local="using:CallOfBeer.App"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
 
+        <Grid Grid.Row="0" d:IsLocked="True" >
+            <TextBlock x:Name="Title" Text="Call Of Beer" FontSize="40" TextAlignment="Center" Padding="0,10,0,0"/>
+            <TextBlock x:Name="Slogan" Text="It's time to hydrate" FontSize="17" TextAlignment="Center" Padding="0,53,0,0"/>
+        </Grid>
+
+        <!--Block centrale-->
+        <Grid Grid.Row="1"  >
+            <Grid.Background>
+                <ImageBrush ImageSource="ms-appx:/Assets/background.png" Stretch="Fill"/>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1.25*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Colone de gauche-->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="0,0,0,10.222">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="8*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <TextBlock x:Name="Describ_left" Text="Répondez à l'appel !" FontSize="17" TextAlignment="Center" Foreground="#FF060606" Margin="0,10"  FontWeight="Medium"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <ListView x:Name="List_Event" Height="279" Foreground="Black" VerticalAlignment="Top" Margin="0,10,0,0">
+                            <!-- 
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border>
+                                        <Grid>
+                                            <TextBlock Text="{Binding Title}" />
+                                            <TextBlock Text="{Binding Description}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate> 
+                            </ListView.ItemTemplate> 
+-->
+                            <x:String>Item 1</x:String>
+                            <x:String>Item 2</x:String>
+                            <x:String>Item 3</x:String>
+                            <x:String>Item 4</x:String>
+                            <x:String>Item 5</x:String>
+                            <x:String>Item 6</x:String>
+                            <x:String>Item 7</x:String>
+                            <x:String>Item 8</x:String>
+                            <x:String>Item 9</x:String>
+                            <x:String>Item 10</x:String>
+                        </ListView>
+                    </Grid>
+                </Grid>
+
+                <!--Zone de boutons-->
+                <Grid Grid.Row="1">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Button x:Name="New_Call"  Content="Lancer un appel" HorizontalAlignment="Left" Height="55"  Grid.Row="1" VerticalAlignment="Top" Width="158" Foreground="Black" BorderBrush="Black"/>
+                        <Button x:Name="Profile"   Content="Mon Compt" HorizontalAlignment="Left" Height="55"  Grid.Row="1" VerticalAlignment="Top" Width="158" Foreground="Black" BorderBrush="Black" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <!--Colone de droite-->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="13*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <TextBlock x:Name="Describe_right" Text="Chercher autour de vous" FontSize="17" TextAlignment="Center" Foreground="#FF060606" Margin="0,10" FontWeight="Medium"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Maps:MapControl x:Name="Map_Home" Margin="10,10,10,40" />
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2"></Grid> 
     </Grid>
 </Page>
