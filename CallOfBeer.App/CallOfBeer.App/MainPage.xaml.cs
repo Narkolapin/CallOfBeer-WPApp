@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CallOfBeer.API;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,6 +28,10 @@ namespace CallOfBeer.App
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
+
+            //Requéte de l'API
+            APITools connectAPI = new APITools();
+            connectAPI.GetEvents().Wait();
         }
 
         /// <summary>
