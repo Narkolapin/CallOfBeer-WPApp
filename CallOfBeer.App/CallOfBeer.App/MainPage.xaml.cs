@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using CallOfBeer.App.Class;
 
 // Pour en savoir plus sur le modèle d'élément Page vierge, consultez la page http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -31,7 +33,9 @@ namespace CallOfBeer.App
 
             //Requéte de l'API
             APITools connectAPI = new APITools();
-            connectAPI.GetEvents().Wait();
+            //connectAPI.GetEvents().Wait();
+            CoordinateConvert.MyPosition(Map_Home);
+            
         }
 
         /// <summary>
