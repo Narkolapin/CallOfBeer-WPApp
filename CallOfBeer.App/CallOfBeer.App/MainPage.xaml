@@ -6,8 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+    
+    xmlns:m="using:Bing.Maps"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -95,7 +98,12 @@
                     <TextBlock x:Name="Describe_right" Text="Chercher autour de vous" FontSize="17" TextAlignment="Center" Foreground="#FF060606" Margin="0,10" FontWeight="Medium"/>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <Maps:MapControl x:Name="Map_Home" Margin="10,10,10,40" />
+                    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+                        <Maps:MapControl x:Name="MapHome" MapServiceToken="AsP_0Zt_iFexgQXpdalngpR2zo3vLQss6rU8Ca3MyI8sMgpLCmQkuV09y5Ko77sl">
+                            
+                            
+                        </Maps:MapControl>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

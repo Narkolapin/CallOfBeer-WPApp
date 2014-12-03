@@ -34,7 +34,7 @@ namespace CallOfBeer.App
             //Requéte de l'API
             APITools connectAPI = new APITools();
             //connectAPI.GetEvents().Wait();
-            CoordinateConvert.MyPosition(Map_Home);
+            CoordinateConvert.MyPosition(MapHome);
             
         }
 
