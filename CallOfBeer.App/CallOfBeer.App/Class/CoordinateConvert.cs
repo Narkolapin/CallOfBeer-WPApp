@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.Foundation;
+using Windows.Storage.Streams;
 
 namespace CallOfBeer.App.Class
 {
@@ -34,6 +35,7 @@ namespace CallOfBeer.App.Class
                 );
         }
 
+        //Affiche la position du joueur
         public static async void MyPosition(MapControl mapHome) 
         {        
             Geolocator maLocation = new Geolocator();
@@ -51,13 +53,30 @@ namespace CallOfBeer.App.Class
             //Envois sur la map des données
             mapHome.Center = newPoint;
             mapHome.ZoomLevel = 15;
-
+        
             //Ajoute un push pin sur la position de l'utilisateur
+            //msdn.microsoft.com/en-us/library/windows/apps/xaml/dn792121.aspx
             MapIcon iconPosition = new MapIcon();
             iconPosition.Location = newPoint;
             iconPosition.Title = "Votre position";
-            iconPosition.NormalizedAnchorPoint = new Point(0.5, 1.0);
+            iconPosition.NormalizedAnchorPoint = new Point(1.0, 1.0);
+            //iconPosition.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/customicon.png"));
             mapHome.MapElements.Add(iconPosition);
+
+        }
+
+        //Retourne les coordionnées sup gauche, inf droit de la map
+        public static void GetMapCornerCoordinate(MapControl maMap, out BasicGeoposition NW, out BasicGeoposition SE)
+        {
+            NW = new BasicGeoposition();
+            SE = new BasicGeoposition();
+            Geopoint p = null;
+
+            maMap.GetLocationFromOffset(new Point(0,0),out p);
+            NW = p.Position;
+
+            maMap.GetLocationFromOffset(new Point(maMap.ActualWidth, maMap.ActualHeight), out p);
+            SE = p.Position;
         }
     }
 }

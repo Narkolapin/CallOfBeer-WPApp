@@ -6,8 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
-    
-    xmlns:m="using:Bing.Maps"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 >
@@ -99,15 +97,19 @@
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-                        <Maps:MapControl x:Name="MapHome" MapServiceToken="AsP_0Zt_iFexgQXpdalngpR2zo3vLQss6rU8Ca3MyI8sMgpLCmQkuV09y5Ko77sl">
-                            
-                            
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="185*"/>
+                            <RowDefinition Height="41*"/>
+                        </Grid.RowDefinitions>
+                        <Maps:MapControl x:Name="MapHome" MapServiceToken="AsP_0Zt_iFexgQXpdalngpR2zo3vLQss6rU8Ca3MyI8sMgpLCmQkuV09y5Ko77sl" Grid.RowSpan="2">
+
+
                         </Maps:MapControl>
                     </Grid>
                 </Grid>
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="2"></Grid> 
+        <Grid Grid.Row="2"></Grid>
     </Grid>
 </Page>

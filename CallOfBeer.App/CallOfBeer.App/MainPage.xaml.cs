@@ -31,10 +31,14 @@ namespace CallOfBeer.App
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
+            BasicGeoposition topLeft;
+            BasicGeoposition bottomRight;
             //Requéte de l'API
             APITools connectAPI = new APITools();
-            //connectAPI.GetEvents().Wait();
+            
             CoordinateConvert.MyPosition(MapHome);
+            CoordinateConvert.GetMapCornerCoordinate(MapHome, out topLeft, out bottomRight);
+            connectAPI.GetEvents(topLeft.Latitude, topLeft.Longitude, bottomRight.Latitude, bottomRight.Longitude).Wait();
             
         }
 
