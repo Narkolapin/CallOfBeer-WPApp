@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 >
 
-    <Grid>
+    <Grid Loaded="MainPageLoaded">
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*" />
             <RowDefinition Height="8*" />
@@ -51,7 +51,7 @@
 
                     <Grid Grid.Row="1">
                         <ListView x:Name="List_Event" Height="279" Foreground="Black" VerticalAlignment="Top" Margin="0,10,0,0">
-                            <!-- 
+
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Border>
@@ -60,10 +60,10 @@
                                             <TextBlock Text="{Binding Description}"/>
                                         </Grid>
                                     </Border>
-                                </DataTemplate> 
-                            </ListView.ItemTemplate> 
--->
-                            <x:String>Item 1</x:String>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+                            <!-- <x:String>Item 1</x:String>
                             <x:String>Item 2</x:String>
                             <x:String>Item 3</x:String>
                             <x:String>Item 4</x:String>
@@ -72,7 +72,7 @@
                             <x:String>Item 7</x:String>
                             <x:String>Item 8</x:String>
                             <x:String>Item 9</x:String>
-                            <x:String>Item 10</x:String>
+                            <x:String>Item 10</x:String> -->
                         </ListView>
                     </Grid>
                 </Grid>
@@ -80,7 +80,7 @@
                 <!--Zone de boutons-->
                 <Grid Grid.Row="1">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Button x:Name="New_Call"  Content="Lancer un appel" HorizontalAlignment="Left" Height="55"  Grid.Row="1" VerticalAlignment="Top" Width="158" Foreground="Black" BorderBrush="Black"/>
+                        <Button x:Name="New_Call"  Content="Lancer un appel" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="158" Foreground="Black" BorderBrush="Black" Tapped="NewCall"/>
                         <Button x:Name="Profile"   Content="Mon Compt" HorizontalAlignment="Left" Height="55"  Grid.Row="1" VerticalAlignment="Top" Width="158" Foreground="Black" BorderBrush="Black" />
                     </StackPanel>
                 </Grid>

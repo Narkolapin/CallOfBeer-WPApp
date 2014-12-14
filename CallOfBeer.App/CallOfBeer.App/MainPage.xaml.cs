@@ -28,18 +28,7 @@ namespace CallOfBeer.App
         public MainPage()
         {
             this.InitializeComponent();
-
             this.NavigationCacheMode = NavigationCacheMode.Required;
-
-            BasicGeoposition topLeft;
-            BasicGeoposition bottomRight;
-            //Requéte de l'API
-            APITools connectAPI = new APITools();
-            
-            CoordinateConvert.MyPosition(MapHome);
-            CoordinateConvert.GetMapCornerCoordinate(MapHome, out topLeft, out bottomRight);
-            connectAPI.GetEvents(topLeft.Latitude, topLeft.Longitude, bottomRight.Latitude, bottomRight.Longitude).Wait();
-            
         }
 
         /// <summary>
@@ -56,6 +45,24 @@ namespace CallOfBeer.App
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed.
             // Si vous utilisez le NavigationHelper fourni par certains modèles,
             // cet événement est géré automatiquement.
+        }
+
+        private async void MainPageLoaded(object sender, RoutedEventArgs e)
+        {
+            BasicGeoposition topLeft;
+            BasicGeoposition bottomRight;
+            //Requéte de l'API
+            APITools connectAPI = new APITools();
+
+            CoordinateConvert.MapInit(MapHome);
+            CoordinateConvert.GetMapCornerCoordinate(MapHome, out topLeft, out bottomRight);
+            List<Events> events = await connectAPI.GetEvents(topLeft.Latitude, topLeft.Longitude, bottomRight.Latitude, bottomRight.Longitude);
+
+        }
+
+        private void NewCall(object sender, TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

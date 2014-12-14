@@ -35,9 +35,14 @@ namespace CallOfBeer.App.Class
                 );
         }
 
-        //Affiche la position du joueur
-        public static async void MyPosition(MapControl mapHome) 
-        {        
+
+        /// <summary>
+        /// Recupére la position de l'appareil
+        /// </summary>
+        /// <returns>BasicGeoposition</returns>
+        public static async Task<BasicGeoposition> ActualPosition()
+        {
+
             Geolocator maLocation = new Geolocator();
             Geoposition myGeoposition = await maLocation.GetGeopositionAsync();
             Geocoordinate myGeocoordinate = myGeoposition.Coordinate;
@@ -48,7 +53,17 @@ namespace CallOfBeer.App.Class
             newGeo.Latitude = myGeoCoordinate.Latitude;
             newGeo.Longitude = myGeoCoordinate.Longitude;
 
-            Geopoint newPoint = new Geopoint(newGeo);
+            return newGeo;
+        }
+
+
+        /// <summary>
+        /// Charge la map sur la position du joueur
+        /// </summary>
+        /// <param name="mapHome"></param>
+        public static async void MapInit(MapControl mapHome) 
+        {        
+            Geopoint newPoint = new Geopoint(await ActualPosition());
 
             //Envois sur la map des données
             mapHome.Center = newPoint;
@@ -62,8 +77,8 @@ namespace CallOfBeer.App.Class
             iconPosition.NormalizedAnchorPoint = new Point(1.0, 1.0);
             //iconPosition.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/customicon.png"));
             mapHome.MapElements.Add(iconPosition);
-
         }
+
 
         //Retourne les coordionnées sup gauche, inf droit de la map
         public static void GetMapCornerCoordinate(MapControl maMap, out BasicGeoposition NW, out BasicGeoposition SE)
