@@ -62,7 +62,14 @@ namespace CallOfBeer.App
 
         private void NewCall(object sender, TappedRoutedEventArgs e)
         {
-
+            BasicGeoposition topLeft;
+            BasicGeoposition bottomRight;
+            CoordinateConvert.GetMapCornerCoordinate(MapHome, out topLeft, out bottomRight);
+            List<BasicGeoposition> maListe = new List<BasicGeoposition>(){
+                topLeft,
+                bottomRight
+            };
+            Frame.Navigate(typeof(NewEvent), maListe);
         }
     }
 }

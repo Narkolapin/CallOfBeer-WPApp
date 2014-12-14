@@ -46,27 +46,6 @@ namespace CallOfBeer.App
 
         private void Launch_Event(object sender, TappedRoutedEventArgs e)
         {
-            BasicGeoposition maPosition = new BasicGeoposition(){
-            Latitude = CoordinateConvert.ActualPosition().Result.Latitude,
-            Longitude = CoordinateConvert.ActualPosition().Result.Longitude
-            };
-
-            AddEvents newEvent = new AddEvents()
-            {
-               Name = this.event_adress.Text,
-               AdressName = event_adressname.Text,
-               Adress = event_adress.Text,
-               Zip = Convert.ToInt32(event_zip),
-               City = event_city.Text,
-               Country = event_country.Text,
-               Date = DateTime.Now,
-               Lat = maPosition.Latitude,
-               Long = maPosition.Longitude
-            };
-
-            APITools api = new APITools();
-            api.PostEvent(newEvent);
-
 
         }
     }
