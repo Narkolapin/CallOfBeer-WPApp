@@ -59,5 +59,21 @@ namespace CallOfBeer.API
 
                 }*/
         }
+
+
+        public async void PostEvent(AddEvents newEvent)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://api.callofbeer.com/");
+                HttpResponseMessage reponse = new HttpResponseMessage();
+
+                reponse = await client.PostAsJsonAsync("http://api.callofbeer.com/", newEvent);
+                if (reponse.IsSuccessStatusCode)
+                {
+
+                }
+            }
+        }
     }
 }
