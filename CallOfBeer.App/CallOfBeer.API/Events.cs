@@ -19,26 +19,18 @@ namespace CallOfBeer.API
 
         public string date { get; set; }
 
-        public Location location { get; set; }
-
         public Adress adress { get; set; }
     }   
-
-    //Declaration de la structure d'une location
-    public struct Location
-    {
-        public double lon;
-        public double lat;
-    }
 
     //Declaration de la structure d'une adress
     public struct Adress
     {
-        public string id;
-        public string adress;
-        public string city;
-        public string country;
-        public int zip;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public double[] Geolocalisation { get; set; }
     }
     
 }

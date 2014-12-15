@@ -22,9 +22,8 @@ namespace CallOfBeer.API
                 try
                 {
                     string url = string.Format("http://api.callofbeer.com/events?topLat={0}&topLon={1}&botLat={2}&botLon={3}", topLat, topLon, botLat, botLon).Replace(",",".");
-
                     HttpResponseMessage reponse = await client.GetAsync(new Uri(url));
-                   reponse.EnsureSuccessStatusCode();
+                    reponse.EnsureSuccessStatusCode();
 
                     if (reponse.IsSuccessStatusCode)
                     {
@@ -40,24 +39,6 @@ namespace CallOfBeer.API
 
                 return null;
             }
-
-
-   
-                //Test
-                /* var reponse = new HttpResponseMessage();
-                HttpClient client = new HttpClient();
-                string url = string.Format("http://api.callofbeer.com/events?topLat={0}&topLon={1}&botLat={2}&botLon={3}", topLat, topLon, botLat, botLon);
-                
-                try{
-                reponse = await client.GetAsync(url);
-                reponse.EnsureSuccessStatusCode();
-                List<Events> getEvent = await reponse.Content.ReadAsAsync<List<Events>>();
-                
-
-                }
-                catch(Exception e){
-
-                }*/
         }
 
 
