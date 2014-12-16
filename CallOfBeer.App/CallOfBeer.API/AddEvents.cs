@@ -9,13 +9,13 @@ namespace CallOfBeer.API
     public class AddEvents
     {
         public string Name { get; set; }
-        public DateTime Date { get; set; }
-        public String AdressName { get; set; }
+        public TimeSpan Date { get; set; }
+        public string AdressName { get; set; }
         public string Adress { get; set; }
         public int Zip { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public double Lat { get; set; }
-        public double Long { get; set; }
+        public double[] Geolocalisation { get; set; }
+
     }
 }

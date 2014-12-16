@@ -11,6 +11,14 @@ namespace CallOfBeer.API
     public class APITools
     {
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="topLat"></param>
+        /// <param name="topLon"></param>
+        /// <param name="botLat"></param>
+        /// <param name="botLon"></param>
+        /// <returns></returns>
         public async Task<List<Events>> GetEvents(double topLat, double topLon, double botLat, double botLon )
         {
             using (var client = new HttpClient())
@@ -34,26 +42,35 @@ namespace CallOfBeer.API
                 catch (HttpRequestException e)
                 {
                     string error = "Une erreur à été levé : " + e.ToString();
-                    return null;
                 }
-
                 return null;
             }
         }
 
-
-        public async void PostEvent(AddEvents newEvent)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newEvent"></param>
+        public async void PostEvent(List<KeyValuePair<string, string>> newEvent)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClient(new HttpClientHandler()))
             {
-                client.BaseAddress = new Uri("http://api.callofbeer.com/");
-                HttpResponseMessage reponse = new HttpResponseMessage();
-
-                reponse = await client.PostAsJsonAsync("http://api.callofbeer.com/", newEvent);
+           
+                string api = "http://api.callofbeer.com/events";
+                HttpResponseMessage reponse = await client.PostAsync(api, new FormUrlEncodedContent(newEvent));
+                reponse.EnsureSuccessStatusCode();
                 if (reponse.IsSuccessStatusCode)
                 {
-
+                    string sortie = reponse.Content.ToString();
+                    int i = 1;
                 }
+                else
+                {
+                    //TODO Gères tes erreurs
+                }
+
+                //client.BaseAddress = new Uri("http://api.callofbeer.com/");
+
             }
         }
     }

@@ -49,13 +49,12 @@ namespace CallOfBeer.App
 
         private async void MainPageLoaded(object sender, RoutedEventArgs e)
         {
-            BasicGeoposition topLeft;
-            BasicGeoposition bottomRight;
-            //Requéte de l'API
-            APITools connectAPI = new APITools();
 
             CoordinateConvert.MapInit(MapHome);
-            CoordinateConvert.GetMapCornerCoordinate(MapHome, out topLeft, out bottomRight);
+            BasicGeoposition topLeft = CoordinateConvert.topLeft;
+            BasicGeoposition bottomRight = CoordinateConvert.bottomRight;
+            
+            APITools connectAPI = new APITools();
             List<Events> events = await connectAPI.GetEvents(topLeft.Latitude, topLeft.Longitude, bottomRight.Latitude, bottomRight.Longitude);
 
         }

@@ -16,6 +16,9 @@ namespace CallOfBeer.App.Class
 {
     public static class CoordinateConvert
     {
+        public static BasicGeoposition topLeft;
+        public static BasicGeoposition bottomRight;
+
         /// <summary>
         /// Convertis les données Geoccordinate en GeoCoordiante
         /// </summary>
@@ -42,18 +45,32 @@ namespace CallOfBeer.App.Class
         /// <returns>BasicGeoposition</returns>
         public static async Task<BasicGeoposition> ActualPosition()
         {
+            try 
+            {
+                Geolocator maLocation = new Geolocator();
+                maLocation.DesiredAccuracy = PositionAccuracy.High;
+                Geoposition myGeoposition = await maLocation.GetGeopositionAsync(maximumAge: TimeSpan.FromSeconds(20), timeout: TimeSpan.FromSeconds(10));
+                Geocoordinate myGeocoordinate = myGeoposition.Coordinate;
+                GeoCoordinate myGeoCoordinate = ConvertGeocoordinate(myGeocoordinate);
 
-            Geolocator maLocation = new Geolocator();
-            Geoposition myGeoposition = await maLocation.GetGeopositionAsync();
-            Geocoordinate myGeocoordinate = myGeoposition.Coordinate;
-            GeoCoordinate myGeoCoordinate = ConvertGeocoordinate(myGeocoordinate);
+                //Creation d'un poit représentant la location de l'utilisateur
+                BasicGeoposition newGeo = new BasicGeoposition();
+                newGeo.Latitude = myGeoCoordinate.Latitude;
+                newGeo.Longitude = myGeoCoordinate.Longitude;
 
-            //Creation d'un poit représentant la location de l'utilisateur
-            BasicGeoposition newGeo = new BasicGeoposition();
-            newGeo.Latitude = myGeoCoordinate.Latitude;
-            newGeo.Longitude = myGeoCoordinate.Longitude;
+                return newGeo;
+            }
+            catch (Exception ex)
+            {
+                if ((uint)ex.HResult == 0x80004004)
+                {
+                    // the application does not have the right capability or the location master switch is off
+                }
+                return new BasicGeoposition() { Latitude = 0, Longitude = 0 };
+            }
 
-            return newGeo;
+            
+
         }
 
 
@@ -68,7 +85,9 @@ namespace CallOfBeer.App.Class
             //Envois sur la map des données
             mapHome.Center = newPoint;
             mapHome.ZoomLevel = 15;
-        
+
+            GetMapCornerCoordinate(mapHome,out topLeft, out bottomRight);
+          
             //Ajoute un push pin sur la position de l'utilisateur
             //msdn.microsoft.com/en-us/library/windows/apps/xaml/dn792121.aspx
             MapIcon iconPosition = new MapIcon();

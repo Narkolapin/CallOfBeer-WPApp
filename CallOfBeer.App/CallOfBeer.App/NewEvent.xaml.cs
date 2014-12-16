@@ -2,9 +2,11 @@
 using CallOfBeer.App.Class;
 using System;
 using System.Collections.Generic;
+using System.Device.Location;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -44,30 +46,89 @@ namespace CallOfBeer.App
             Frame.GoBack();
         }
 
-        private void Launch_Event(object sender, TappedRoutedEventArgs e)
+        private async void Launch_Event(object sender, TappedRoutedEventArgs e)
         {
-            BasicGeoposition maPosition = new BasicGeoposition(){
-            Latitude = CoordinateConvert.ActualPosition().Result.Latitude,
-            Longitude = CoordinateConvert.ActualPosition().Result.Longitude
-            };
+            BasicGeoposition maPosition = new BasicGeoposition();
+            //maPosition = CoordinateConvert.ActualPosition().Result;
+            
+            Geolocator maLocation = new Geolocator();
+            Geoposition myGeoposition = await maLocation.GetGeopositionAsync(maximumAge: TimeSpan.FromSeconds(20), timeout: TimeSpan.FromSeconds(10));
+            Geocoordinate myGeocoordinate = myGeoposition.Coordinate;
+            GeoCoordinate myGeoCoordinate = CoordinateConvert.ConvertGeocoordinate(myGeocoordinate);
 
-            AddEvents newEvent = new AddEvents()
+            maPosition.Longitude = myGeocoordinate.Longitude;
+            maPosition.Latitude = myGeocoordinate.Latitude;
+
+            try
             {
-               Name = this.event_adress.Text,
-               AdressName = event_adressname.Text,
-               Adress = event_adress.Text,
-               Zip = Convert.ToInt32(event_zip),
-               City = event_city.Text,
-               Country = event_country.Text,
-               Date = DateTime.Now,
-               Lat = maPosition.Latitude,
-               Long = maPosition.Longitude
-            };
+                var tosend = new List<KeyValuePair<string, string>>{
+                    new KeyValuePair<string, string>("Key", null),
+                    new KeyValuePair<string, string>("eventName", "Alors ? 9a va mieu la picole ?"),
+                    new KeyValuePair<string, string>("eventDate", "42"),
+                    new KeyValuePair<string, string>("addressLat", maPosition.Longitude.ToString().Replace(",",".")),
+                    new KeyValuePair<string, string>("addressLon", maPosition.Latitude.ToString().Replace(",",".")),
+                    new KeyValuePair<string, string>("addressName", "verre plein, je te vide"),
+                    new KeyValuePair<string, string>("addressAddress", "Verre vide je te plains"),
+                    new KeyValuePair<string, string>("addressZip", "66000"),
+                    new KeyValuePair<string, string>("addressCity", "MériRpz"),
+                    new KeyValuePair<string, string>("addressCountry", "Fr"),
+                };
+                APITools api = new APITools();
+                api.PostEvent(tosend);
+            }
+            catch (Exception fe) { }
 
-            APITools api = new APITools();
-            api.PostEvent(newEvent);
 
 
         }
     }
 }
+
+
+/*Class1 tosend = new Class1()
+{
+
+    adresss = new Adresss
+    {
+        Address = "zlefnzelf", 
+        City = "lzfjzekcné",
+        Country="qmfj",
+        Geolocalisation = new double[2]{ maPosition.Latitude,maPosition.Longitude},
+        Name = "lsnz"
+                
+    },
+    date =  new TimeSpan(4,3,2),
+    name = "PUTAIN TU VAS MARCHER"
+                          
+};*/
+/*AddEvents newEvent = new AddEvents()
+{
+    Name = this.event_adress.Text,
+    AdressName = event_adressname.Text,
+    Adress = 8,
+    Zip = 33000,
+    City = event_city.Text,
+    Country = event_country.Text,
+    Date = new TimeSpan(4,3,2),
+    Geolocalisation = new double[2]{ maPosition.Latitude,maPosition.Longitude}
+
+};*/
+
+/* var toSend = new FormUrlEncodedContent(new[]
+{
+//eventName, eventDate, addressLon, addressLat. To Update : eventId. Options : addressName, addressAddress, addressZip, addressCity, addressCountry
+new KeyValuePair<string, string>("eventName", newEvent.Name),
+new KeyValuePair<string, string>("eventDate", newEvent.Date.ToString()),
+new KeyValuePair<string, string>("addressLat", newEvent.Lat.ToString()),
+new KeyValuePair<string, string>("addressLon", newEvent.Long.ToString())
+                
+/*new KeyValuePair<string, string>("eventName", newEvent.Name),
+new KeyValuePair<string, string>("eventDate", newEvent.Date.ToString()),
+new KeyValuePair<string, string>("addressLat", newEvent.Lat.ToString()),
+new KeyValuePair<string, string>("addressLon", newEvent.Long.ToString()),
+new KeyValuePair<string, string>("addressName", newEvent.AdressName),
+new KeyValuePair<string, string>("addressAddress", newEvent.Adress),
+new KeyValuePair<string, string>("addressZip", newEvent.Zip.ToString()),
+new KeyValuePair<string, string>("addressCity", newEvent.City),
+new KeyValuePair<string, string>("addressCountry", newEvent.Country),
+});*/
