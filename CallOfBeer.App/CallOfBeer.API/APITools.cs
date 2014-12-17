@@ -10,9 +10,6 @@ namespace CallOfBeer.API
 {
     public class APITools
     {
-
-       
-
         /// <summary>
         /// GetEvent : récupére la liste des évènement à afficher sur la carte 
         /// </summary>

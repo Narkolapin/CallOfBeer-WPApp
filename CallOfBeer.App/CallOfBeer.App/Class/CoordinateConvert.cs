@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.Foundation;
 using Windows.Storage.Streams;
+using CallOfBeer.API;
 
 namespace CallOfBeer.App.Class
 {
@@ -30,7 +31,7 @@ namespace CallOfBeer.App.Class
 
             //Paramétres de la carte
             mapHome.Center = newPoint;
-            mapHome.ZoomLevel = 12;
+            mapHome.ZoomLevel = 13;
 
             //Ajoute un push pin sur la position de l'utilisateur
             //msdn.microsoft.com/en-us/library/windows/apps/xaml/dn792121.aspx
@@ -114,6 +115,30 @@ namespace CallOfBeer.App.Class
 
             maMap.GetLocationFromOffset(new Point(maMap.ActualWidth, maMap.ActualHeight), out p);
             SE = p.Position;
+        }
+
+        public static void AddMapPoint(MapControl theMap, BasicGeoposition pointToDraw, Events myEvent)
+        {
+
+            try
+            {
+                MapIcon mapicon = new MapIcon();
+                mapicon.Location = new Geopoint(
+                    new BasicGeoposition()
+                    {
+                        Latitude = pointToDraw.Latitude,
+                        Longitude = pointToDraw.Longitude
+                    }
+                );
+                mapicon.NormalizedAnchorPoint = new Point(0.5, 0.5);
+                mapicon.Title = myEvent.name;
+                theMap.MapElements.Add(mapicon);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

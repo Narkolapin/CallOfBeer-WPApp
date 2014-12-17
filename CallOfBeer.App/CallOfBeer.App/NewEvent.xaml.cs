@@ -61,25 +61,12 @@ namespace CallOfBeer.App
 
             try
             {
-                var tosend = new List<KeyValuePair<string, string>>{
-                    new KeyValuePair<string, string>("Key", null),
-                    new KeyValuePair<string, string>("eventName", "Alors ? 9a va mieu la picole ?"),
-                    new KeyValuePair<string, string>("eventDate", "42"),
-                    new KeyValuePair<string, string>("addressLat", maPosition.Longitude.ToString().Replace(",",".")),
-                    new KeyValuePair<string, string>("addressLon", maPosition.Latitude.ToString().Replace(",",".")),
-                    new KeyValuePair<string, string>("addressName", "verre plein, je te vide"),
-                    new KeyValuePair<string, string>("addressAddress", "Verre vide je te plains"),
-                    new KeyValuePair<string, string>("addressZip", "66000"),
-                    new KeyValuePair<string, string>("addressCity", "MériRpz"),
-                    new KeyValuePair<string, string>("addressCountry", "Fr"),
-                };
-
                 AddEvents SendEvent = new AddEvents()
                 {
                     eventName ="Alors ? 9a va mieu la picole ?",
-                    eventDate ="42",
-                    addressLat =maPosition.Longitude.ToString().Replace(",","."),
-                    addressLon =maPosition.Latitude.ToString().Replace(",","."),
+                    eventDate = "1418824922",
+                    addressLat =maPosition.Latitude.ToString().Replace(",","."),
+                    addressLon = maPosition.Longitude.ToString().Replace(",", "."),
                     addressName ="verre plein, je te vide",
                     addressAddress ="Verre vide je te plains",
                     addressZip ="66000",
@@ -98,52 +85,3 @@ namespace CallOfBeer.App
         }
     }
 }
-
-
-/*Class1 tosend = new Class1()
-{
-
-    adresss = new Adresss
-    {
-        Address = "zlefnzelf", 
-        City = "lzfjzekcné",
-        Country="qmfj",
-        Geolocalisation = new double[2]{ maPosition.Latitude,maPosition.Longitude},
-        Name = "lsnz"
-                
-    },
-    date =  new TimeSpan(4,3,2),
-    name = "PUTAIN TU VAS MARCHER"
-                          
-};*/
-/*AddEvents newEvent = new AddEvents()
-{
-    Name = this.event_adress.Text,
-    AdressName = event_adressname.Text,
-    Adress = 8,
-    Zip = 33000,
-    City = event_city.Text,
-    Country = event_country.Text,
-    Date = new TimeSpan(4,3,2),
-    Geolocalisation = new double[2]{ maPosition.Latitude,maPosition.Longitude}
-
-};*/
-
-/* var toSend = new FormUrlEncodedContent(new[]
-{
-//eventName, eventDate, addressLon, addressLat. To Update : eventId. Options : addressName, addressAddress, addressZip, addressCity, addressCountry
-new KeyValuePair<string, string>("eventName", newEvent.Name),
-new KeyValuePair<string, string>("eventDate", newEvent.Date.ToString()),
-new KeyValuePair<string, string>("addressLat", newEvent.Lat.ToString()),
-new KeyValuePair<string, string>("addressLon", newEvent.Long.ToString())
-                
-/*new KeyValuePair<string, string>("eventName", newEvent.Name),
-new KeyValuePair<string, string>("eventDate", newEvent.Date.ToString()),
-new KeyValuePair<string, string>("addressLat", newEvent.Lat.ToString()),
-new KeyValuePair<string, string>("addressLon", newEvent.Long.ToString()),
-new KeyValuePair<string, string>("addressName", newEvent.AdressName),
-new KeyValuePair<string, string>("addressAddress", newEvent.Adress),
-new KeyValuePair<string, string>("addressZip", newEvent.Zip.ToString()),
-new KeyValuePair<string, string>("addressCity", newEvent.City),
-new KeyValuePair<string, string>("addressCountry", newEvent.Country),
-});*/

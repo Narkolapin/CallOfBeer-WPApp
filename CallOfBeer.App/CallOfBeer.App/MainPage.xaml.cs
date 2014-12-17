@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CallOfBeer.App.Class;
+using System.Collections.ObjectModel;
 
 // Pour en savoir plus sur le modèle d'élément Page vierge, consultez la page http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -49,13 +50,21 @@ namespace CallOfBeer.App
 
         private async void MainPageLoaded(object sender, RoutedEventArgs e)
         {
-
+            ObservableCollection<Events> mycollec = new ObservableCollection<Events>();
             CoordinateConvert.MapInit(MapHome);
             BasicGeoposition topLeft = CoordinateConvert.topLeft;
             BasicGeoposition bottomRight = CoordinateConvert.bottomRight;
             
             APITools connectAPI = new APITools();
             List<Events> events = await connectAPI.GetEvents(topLeft.Latitude, topLeft.Longitude, bottomRight.Latitude, bottomRight.Longitude);
+
+            foreach (Events item in events)
+            {
+                CoordinateConvert.AddMapPoint(MapHome, new BasicGeoposition() { Latitude = item.address.Geolocation[1], Longitude = item.address.Geolocation[0] }, item);
+                mycollec.Add(item);
+            }
+            EventListView.DataContext = mycollec;
+
 
         }
 

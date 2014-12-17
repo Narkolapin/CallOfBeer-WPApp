@@ -8,14 +8,14 @@ namespace CallOfBeer.API
 {
     public class Events
     {
-        public int id { get; set; }
+        public string id { get; set; }
 
         public string name { get; set; }
 
         public string date { get; set; }
 
-        public Adress adress { get; set; }
-    }   
+        public Adress address { get; set; }
+    }
 
     //Declaration de la structure d'une adress
     public struct Adress
@@ -25,7 +25,7 @@ namespace CallOfBeer.API
         public string Address { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public double[] Geolocalisation { get; set; }
+        public double[] Geolocation { get; set; }
     }
     
 }
