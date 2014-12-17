@@ -20,6 +20,32 @@ namespace CallOfBeer.App.Class
         public static BasicGeoposition bottomRight;
 
         /// <summary>
+        /// Charge la map sur la position du joueur
+        /// </summary>
+        /// <param name="mapHome">la map afficher dans le Xaml</param>
+        public static async void MapInit(MapControl mapHome)
+        {
+            // Coordonées de l'utilisateur
+            Geopoint newPoint = new Geopoint(await ActualPosition());
+
+            //Paramétres de la carte
+            mapHome.Center = newPoint;
+            mapHome.ZoomLevel = 12;
+
+            //Ajoute un push pin sur la position de l'utilisateur
+            //msdn.microsoft.com/en-us/library/windows/apps/xaml/dn792121.aspx
+            MapIcon iconPosition = new MapIcon();
+            iconPosition.Location = newPoint;
+            iconPosition.Title = "Votre position";
+            iconPosition.NormalizedAnchorPoint = new Point(1.0, 1.0);
+            //iconPosition.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/customicon.png"));
+            mapHome.MapElements.Add(iconPosition);
+
+            GetMapCornerCoordinate(mapHome, out topLeft, out bottomRight);
+        }
+
+
+        /// <summary>
         /// Convertis les données Geoccordinate en GeoCoordiante
         /// </summary>
         /// <param name="geocoordinate">Element renvoyer par le gps</param>
@@ -42,10 +68,10 @@ namespace CallOfBeer.App.Class
         /// <summary>
         /// Recupére la position de l'appareil
         /// </summary>
-        /// <returns>BasicGeoposition</returns>
+        /// <returns>BasicGeoposition avec les données de position de l'utilisateur</returns>
         public static async Task<BasicGeoposition> ActualPosition()
         {
-            try 
+            try
             {
                 Geolocator maLocation = new Geolocator();
                 maLocation.DesiredAccuracy = PositionAccuracy.High;
@@ -68,38 +94,15 @@ namespace CallOfBeer.App.Class
                 }
                 return new BasicGeoposition() { Latitude = 0, Longitude = 0 };
             }
-
-            
-
         }
 
 
         /// <summary>
-        /// Charge la map sur la position du joueur
+        /// Retourne les coordionnées sup gauche, inf droit de la map
         /// </summary>
-        /// <param name="mapHome"></param>
-        public static async void MapInit(MapControl mapHome) 
-        {        
-            Geopoint newPoint = new Geopoint(await ActualPosition());
-
-            //Envois sur la map des données
-            mapHome.Center = newPoint;
-            mapHome.ZoomLevel = 15;
-
-            GetMapCornerCoordinate(mapHome,out topLeft, out bottomRight);
-          
-            //Ajoute un push pin sur la position de l'utilisateur
-            //msdn.microsoft.com/en-us/library/windows/apps/xaml/dn792121.aspx
-            MapIcon iconPosition = new MapIcon();
-            iconPosition.Location = newPoint;
-            iconPosition.Title = "Votre position";
-            iconPosition.NormalizedAnchorPoint = new Point(1.0, 1.0);
-            //iconPosition.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/customicon.png"));
-            mapHome.MapElements.Add(iconPosition);
-        }
-
-
-        //Retourne les coordionnées sup gauche, inf droit de la map
+        /// <param name="maMap">Map dans la page</param>
+        /// <param name="NW">Point sup gauche</param>
+        /// <param name="SE">point inf droit</param>
         public static void GetMapCornerCoordinate(MapControl maMap, out BasicGeoposition NW, out BasicGeoposition SE)
         {
             NW = new BasicGeoposition();

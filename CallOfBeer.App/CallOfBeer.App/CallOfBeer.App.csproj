@@ -7,7 +7,7 @@
     <ProjectGuid>{E8375298-B3BD-42DD-8179-0661BEA08434}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CallOfBeer.App</RootNamespace>
+    <RootNamespace>CallOfBeer</RootNamespace>
     <AssemblyName>CallOfBeer.App</AssemblyName>
     <DefaultLanguage>fr-FR</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>

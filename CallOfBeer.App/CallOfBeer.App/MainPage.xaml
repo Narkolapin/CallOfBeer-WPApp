@@ -49,7 +49,18 @@
                         <TextBlock x:Name="Describ_left" Text="Répondez à l'appel !" FontSize="17" TextAlignment="Center" Foreground="#FF060606" Margin="0,10"  FontWeight="Medium"/>
                     </Grid>
 
-                    <Grid Grid.Row="1"/>
+                    <Grid Grid.Row="1">
+                        <ListView FontWeight="Bold" x:Name="EventListView" Foreground="Black" >
+                            <x:String>Appel de la Bière 01</x:String>
+                            <x:String>On veux de la bière !</x:String>
+                            <x:String>Boire un petit coup ..</x:String>
+                            <x:String>Désolé pour hiére soir</x:String>
+                            <x:String>Qui a un décap' ?</x:String>
+                            <x:String>Verre plain, je te vide</x:String>
+                            <x:String>Verre vide je te plainds</x:String>
+                        </ListView>
+                    </Grid>
+
                 </Grid>
 
                 <!--Zone de boutons-->

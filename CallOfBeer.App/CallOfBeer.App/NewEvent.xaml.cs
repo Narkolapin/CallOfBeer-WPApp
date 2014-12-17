@@ -73,8 +73,23 @@ namespace CallOfBeer.App
                     new KeyValuePair<string, string>("addressCity", "MériRpz"),
                     new KeyValuePair<string, string>("addressCountry", "Fr"),
                 };
+
+                AddEvents SendEvent = new AddEvents()
+                {
+                    eventName ="Alors ? 9a va mieu la picole ?",
+                    eventDate ="42",
+                    addressLat =maPosition.Longitude.ToString().Replace(",","."),
+                    addressLon =maPosition.Latitude.ToString().Replace(",","."),
+                    addressName ="verre plein, je te vide",
+                    addressAddress ="Verre vide je te plains",
+                    addressZip ="66000",
+                    addressCity ="MériRpz",
+                    addressCountry ="Fr"
+                };
+
+
                 APITools api = new APITools();
-                api.PostEvent(tosend);
+                api.PostEvent(SendEvent);
             }
             catch (Exception fe) { }
 

@@ -36,7 +36,6 @@
   <ItemGroup>
     <Compile Include="AddEvents.cs" />
     <Compile Include="APITools.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
