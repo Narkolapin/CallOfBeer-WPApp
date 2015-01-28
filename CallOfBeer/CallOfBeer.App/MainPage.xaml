@@ -58,7 +58,7 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.DataContext>
-                        </ListBox>-->
+                        </ListBox>
                         <ListView FontWeight="Bold" x:Name="EventListView" Foreground="White" ItemsSource="{Binding}">
                             <ListView.DataContext>
                                 <DataTemplate>
@@ -75,7 +75,7 @@
                             <x:String>Qui a un décap' ?</x:String>
                             <x:String>Verre plain, je te vide</x:String>
                             <x:String>Verre vide je te plainds</x:String>
-                        </ListView>
+                        </ListView>-->
                     </Grid>
 
                 </Grid>

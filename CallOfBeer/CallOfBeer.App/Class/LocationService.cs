@@ -15,23 +15,88 @@ using CallOfBeer.API;
 
 namespace CallOfBeer.App.Class
 {
-    public static class CoordinateConvert
+    public static class LocationService
     {
         public static BasicGeoposition topLeft;
         public static BasicGeoposition bottomRight;
+        public static Geoposition localPosition;
+
+        /// <summary>
+        /// Initialise la map
+        /// </summary>
+        /// <param name="appMap">nom de la map dans la vue</param>
+        public static async void LoadMap(MapControl appMap)
+        {
+            Geoposition returnedPosition = await GetUserPosition();
+            MapIcon userMapIcon = new MapIcon();
+
+            //TODO Initialiser les paramétre de la map
+            appMap.ZoomLevel = 13;
+
+            //TODO Definir la position de l'utilisateur
+            appMap.Center = returnedPosition.Coordinate.Point;
+
+            //TODO Afficher les élements de la carte
+            userMapIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/customicon.png"));
+            userMapIcon.Location = appMap.Center;
+            userMapIcon.Title = "Votre position";
+            userMapIcon.NormalizedAnchorPoint = new Point(0.5,0.5);
+        }
+
+        /// <summary>
+        /// Determine la position géographique de l'utilisateur
+        /// </summary>
+        /// <returns>Géoposition de l'utilisateur</returns>
+        private static async Task<Geoposition> UserPosition()
+        {
+            Geoposition userPosition = null;
+            Geolocator gpsValuePosition = new Geolocator();
+
+            try
+            {
+                userPosition = await gpsValuePosition.GetGeopositionAsync();
+                return userPosition;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Une erreure est survenue : "+ ex.Message);
+            }
+        }
+
+
+        public static async Task<Geoposition> GetUserPosition()
+        {
+            Geoposition userPosition = await UserPosition();
+            return userPosition;
+        }
+
+
+        /// <summary>
+        /// Retourne les coordonnées des coté de la map
+        /// </summary>
+        /// <param name="mapControl"></param>
+        public static void GetMapCornerPosition(MapControl mapControl)
+        {
+            Geopoint geoP;
+            mapControl.GetLocationFromOffset(new Point(0, 0), out geoP);
+            LocationService.topLeft = geoP.Position;
+
+            mapControl.GetLocationFromOffset(new Point(mapControl.ActualWidth, mapControl.ActualHeight), out geoP);
+            LocationService.bottomRight = geoP.Position;
+        }
 
         /// <summary>
         /// Charge la map sur la position du joueur
         /// </summary>
         /// <param name="mapHome">la map afficher dans le Xaml</param>
-        public static async void MapInit(MapControl mapHome)
+       /* public static async void MapInit(MapControl mapHome)
         {
-            // Coordonées de l'utilisateur
-            Geopoint newPoint = new Geopoint(await ActualPosition());
-
             //Paramétres de la carte
             mapHome.Center = newPoint;
             mapHome.ZoomLevel = 13;
+
+            // Coordonées de l'utilisateur
+            Geopoint newPoint = new Geopoint(await ActualPosition());
 
             //Ajoute un push pin sur la position de l'utilisateur
             //msdn.microsoft.com/en-us/library/windows/apps/xaml/dn792121.aspx
@@ -74,18 +139,31 @@ namespace CallOfBeer.App.Class
         {
             try
             {
-                Geolocator maLocation = new Geolocator();
-                maLocation.DesiredAccuracy = PositionAccuracy.High;
-                Geoposition myGeoposition = await maLocation.GetGeopositionAsync(maximumAge: TimeSpan.FromSeconds(20), timeout: TimeSpan.FromSeconds(10));
+                //Position Géographique actuel
+                Geolocator maLocation = new Geolocator() { 
+                    DesiredAccuracy = PositionAccuracy.High 
+                };
+
+                if (maLocation.LocationStatus != PositionStatus.Initializing && maLocation.LocationStatus != PositionStatus.NotInitialized)
+                    throw new Exception("Un erreure est survenue lors de l'initialisation de la géolocalisation");
+
+                //Emplacement d'un utilisateur 
+                Geoposition myGeoposition = await maLocation.GetGeopositionAsync();
+
+                if (myGeoposition.Coordinate == null)
+                    throw new Exception("Valeurs du GPS null");
+
                 Geocoordinate myGeocoordinate = myGeoposition.Coordinate;
                 GeoCoordinate myGeoCoordinate = ConvertGeocoordinate(myGeocoordinate);
 
-                //Creation d'un poit représentant la location de l'utilisateur
-                BasicGeoposition newGeo = new BasicGeoposition();
-                newGeo.Latitude = myGeoCoordinate.Latitude;
-                newGeo.Longitude = myGeoCoordinate.Longitude;
 
-                return newGeo;
+                //Creation d'un point représentant la location de l'utilisateur
+                BasicGeoposition userPointPosition = new BasicGeoposition() { 
+                    Latitude = myGeoCoordinate.Latitude, 
+                    Longitude = myGeoCoordinate.Longitude 
+                };
+
+                return userPointPosition;
             }
             catch (Exception ex)
             {
@@ -93,7 +171,12 @@ namespace CallOfBeer.App.Class
                 {
                     // the application does not have the right capability or the location master switch is off
                 }
-                return new BasicGeoposition() { Latitude = 0, Longitude = 0 };
+                return new BasicGeoposition()
+                {
+                    Longitude = 0.0,
+                    Latitude = 0.0
+               
+                };
             }
         }
 
@@ -139,6 +222,6 @@ namespace CallOfBeer.App.Class
                 throw;
             }
 
-        }
+        }*/
     }
 }

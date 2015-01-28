@@ -28,7 +28,7 @@ namespace CallOfBeer.API
 
                 try
                 {
-                    string url = string.Format("http://api.callofbeer.com/events?topLat={0}&topLon={1}&botLat={2}&botLon={3}", topLat, topLon, botLat, botLon).Replace(",",".");
+                    string url = string.Format("http://api.callofbeer.com/events.json?topLat={0}&topLon={1}&botLat={2}&botLon={3}", topLat, topLon, botLat, botLon).Replace(",",".");
                     HttpResponseMessage reponse = await client.GetAsync(new Uri(url));
                     reponse.EnsureSuccessStatusCode();
                     if (reponse.IsSuccessStatusCode)
